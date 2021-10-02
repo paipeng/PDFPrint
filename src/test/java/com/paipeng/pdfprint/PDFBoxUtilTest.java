@@ -22,6 +22,8 @@ class PDFBoxUtilTest {
     @Test
     void printPDFWithDialog2() throws IOException {
         String output = "/Users/paipeng/Downloads/2022-4.pdf";
+        output = "/Users/paipeng/Downloads/itext7.pdf";
+
         PDFBoxUtil.printPDFWithDialog2(output, null, false);
     }
 }

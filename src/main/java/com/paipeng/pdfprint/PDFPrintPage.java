@@ -1,22 +1,38 @@
 package com.paipeng.pdfprint;
 
-import static java.awt.print.Printable.NO_SUCH_PAGE;
-import static java.awt.print.Printable.PAGE_EXISTS;
-
 import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
 import com.sun.pdfview.PDFRenderer;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class PDFPrintPage  implements Printable {
     private PDFFile file;
-
+    private BufferedImage bufferedImage;
     PDFPrintPage(PDFFile file) {
         this.file = file;
+        try {
+            bufferedImage = readBufferedImageFromResources("images/test.jpeg");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public BufferedImage readBufferedImageFromResources(String path) throws IOException {
+        ClassLoader cl = PDFPrintPage.class.getClassLoader();
+        if (path != null) {
+            InputStream in = cl.getResourceAsStream(path);
+            return ImageIO.read(in);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -61,6 +77,16 @@ public class PDFPrintPage  implements Printable {
             } catch (InterruptedException ie) {
             }
 
+
+            g2.setColor(Color.BLACK);
+            g2.drawString("This is a test!!!!", 20, 10);
+
+            g2.drawLine(10, 10, 100, 100);
+            if (bufferedImage != null) {
+                g2.drawImage(bufferedImage, 0, 0,
+                        (int) bufferedImage.getWidth(),
+                        (int) bufferedImage.getHeight(), null);
+            }
             return PAGE_EXISTS;
         } else {
             return NO_SUCH_PAGE;
