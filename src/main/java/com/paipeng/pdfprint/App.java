@@ -72,7 +72,7 @@ public class App {
                     break;
                 default:
                     if (hasDialog) {
-                        PDFBoxUtil.printPDFWithDialog(inputFilePath, printerName, hasOutput);
+                        PDFBoxUtil.printPDFWithDialog2(inputFilePath, printerName, hasOutput);
                     } else {
                         PDFBoxUtil.printPDF(inputFilePath, printerName, hasOutput);
                     }
