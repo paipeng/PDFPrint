@@ -14,6 +14,9 @@ import java.io.File;
 import java.net.URI;
 
 public class App {
+    private static String inputFilePath;
+    private static String printerName;
+    private static boolean hasOutput;
     public static void main(String[] args) throws Exception {
         Options options = new Options();
 
@@ -43,32 +46,14 @@ public class App {
             System.exit(1);
         }
 
-        String inputFilePath = cmd.getOptionValue("input");
-        String printerName = cmd.getOptionValue("printer");
-
+        inputFilePath = cmd.getOptionValue("input");
+        printerName = cmd.getOptionValue("printer");
+        hasOutput = cmd.hasOption("output");
 
         System.out.println(inputFilePath);
         System.out.println(printerName);
 
-        PDDocument document = PDDocument.load(new File(inputFilePath));
-        PDFPrintable printable = new PDFPrintable(document);
-
-        for(PrintService printService : PrintServiceLookup.lookupPrintServices(null, null)) {
-            System.out.println("printer name: " + printService.getName());
-            if(printService.getName().equals(printerName) || printerName == null) {
-                DocPrintJob job = printService.createPrintJob();
-
-                PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
-                if (cmd.hasOption("output")) {
-                    attr.add(new Destination(new URI("file:////" + inputFilePath + ".out")));
-                }
-                attr.add(MediaSizeName.ISO_A4);
-                attr.add(Sides.ONE_SIDED);
-
-                Doc doc = new SimpleDoc(printable, DocFlavor.SERVICE_FORMATTED.PRINTABLE, null);
-                job.print(doc, attr);
-                break;
-            }
-        }
+        PDFBoxUtil.printPDF(inputFilePath, printerName, hasOutput);
     }
+
 }
