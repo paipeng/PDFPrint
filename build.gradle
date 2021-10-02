@@ -27,12 +27,19 @@ dependencies {
     // https://mvnrepository.com/artifact/e-iceblue/spire.pdf.free
     api group: 'e-iceblue', name: 'spire.pdf', version: '4.9.5'
 
+    // https://mvnrepository.com/artifact/com.itextpdf/itext7-core
+    implementation group: 'com.itextpdf', name: 'itext7-core', version: '7.1.16', ext: 'pom'
+
+    // https://mvnrepository.com/artifact/com.itextpdf/layout
+    implementation group: 'com.itextpdf', name: 'layout', version: '7.1.16'
+
     // https://mvnrepository.com/artifact/commons-cli/commons-cli
     implementation group: 'commons-cli', name: 'commons-cli', version: '1.4'
 
     implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
     implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
 
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
