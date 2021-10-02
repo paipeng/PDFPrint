@@ -28,7 +28,7 @@ dependencies {
     api group: 'e-iceblue', name: 'spire.pdf', version: '4.9.5'
 
     // https://mvnrepository.com/artifact/com.itextpdf/itext7-core
-    implementation group: 'com.itextpdf', name: 'itext7-core', version: '7.1.16', ext: 'pom'
+    //implementation group: 'com.itextpdf', name: 'itext7-core', version: '7.1.16', ext: 'pom'
 
     // https://mvnrepository.com/artifact/com.itextpdf/layout
     implementation group: 'com.itextpdf', name: 'layout', version: '7.1.16'
