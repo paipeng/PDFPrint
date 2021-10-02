@@ -1,22 +1,12 @@
 package com.paipeng.pdfprint;
 
 import org.apache.commons.cli.*;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.printing.PDFPrintable;
-
-import javax.print.*;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.Destination;
-import javax.print.attribute.standard.MediaSizeName;
-import javax.print.attribute.standard.Sides;
-import java.io.File;
-import java.net.URI;
 
 public class App {
     private static String inputFilePath;
     private static String printerName;
     private static boolean hasOutput;
+
     public static void main(String[] args) throws Exception {
         Options options = new Options();
 
