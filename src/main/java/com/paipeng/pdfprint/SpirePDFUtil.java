@@ -13,17 +13,17 @@ public class SpirePDFUtil {
         pdf.loadFromFile(fileName);
 
         PrinterJob loPrinterJob = PrinterJob.getPrinterJob();
-        PageFormat loPageFormat  = loPrinterJob.defaultPage();
+        PageFormat loPageFormat = loPrinterJob.defaultPage();
         Paper loPaper = loPageFormat.getPaper();
 
         //remove the default printing margins
-        loPaper.setImageableArea(0,0,loPageFormat.getWidth(),loPageFormat.getHeight());
+        loPaper.setImageableArea(0, 0, loPageFormat.getWidth(), loPageFormat.getHeight());
 
         //set the number of copies
         loPrinterJob.setCopies(1);
 
         loPageFormat.setPaper(loPaper);
-        loPrinterJob.setPrintable(pdf,loPageFormat);
+        loPrinterJob.setPrintable(pdf, loPageFormat);
         try {
             loPrinterJob.print();
         } catch (PrinterException e) {
@@ -35,20 +35,20 @@ public class SpirePDFUtil {
         PdfDocument pdf = new PdfDocument();
         pdf.loadFromFile(fileName);
 
-        PrinterJob loPrinterJob = PrinterJob.getPrinterJob();
-        PageFormat loPageFormat  = loPrinterJob.defaultPage();
-        Paper loPaper = loPageFormat.getPaper();
+        PrinterJob printerJob = PrinterJob.getPrinterJob();
+        PageFormat pageFormat = printerJob.defaultPage();
+        Paper paper = pageFormat.getPaper();
 
         //remove the default printing margins
-        loPaper.setImageableArea(0,0,loPageFormat.getWidth(),loPageFormat.getHeight());
+        paper.setImageableArea(0, 0, pageFormat.getWidth(), pageFormat.getHeight());
 
-        loPageFormat.setPaper(loPaper);
-        loPrinterJob.setPrintable(pdf,loPageFormat);
+        pageFormat.setPaper(paper);
+        printerJob.setPrintable(pdf, pageFormat);
 
         //display the print dialog
-        if (loPrinterJob.printDialog()) {
+        if (printerJob.printDialog()) {
             try {
-                loPrinterJob.print();
+                printerJob.print();
             } catch (PrinterException e) {
                 e.printStackTrace();
             }

@@ -12,6 +12,9 @@ repositories {
     maven {
         url "https://repo.e-iceblue.com/nexus/content/groups/public"
     }
+    maven {
+        url "https://artifacts.alfresco.com/nexus/content/repositories/public/"
+    }
 }
 
 dependencies {
@@ -32,6 +35,13 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.itextpdf/layout
     implementation group: 'com.itextpdf', name: 'layout', version: '7.1.16'
+
+    // https://mvnrepository.com/artifact/com.itextpdf/io
+    implementation group: 'com.itextpdf', name: 'io', version: '7.1.16'
+
+    // https://mvnrepository.com/artifact/com.sun.pdfview/pdfrenderer
+    implementation group: 'com.sun.pdfview', name: 'pdfrenderer', version: '0.9.1-patched'
+
 
     // https://mvnrepository.com/artifact/commons-cli/commons-cli
     implementation group: 'commons-cli', name: 'commons-cli', version: '1.4'

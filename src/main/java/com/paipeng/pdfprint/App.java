@@ -6,6 +6,7 @@ public class App {
     private static String inputFilePath;
     private static String printerName;
     private static boolean hasOutput;
+    private static boolean hasDialog;
 
     public static void main(String[] args) throws Exception {
         Options options = new Options();
@@ -23,9 +24,14 @@ public class App {
         options.addOption(output);
 
 
-        Option api = new Option("e", "engine", false, "pdf api: itext, pdfbox, spire");
+        Option api = new Option("e", "engine", true, "pdf api: itext, pdfbox, spire");
         api.setRequired(false);
         options.addOption(api);
+
+
+        Option dialog = new Option("d", "dialog", false, "show print dialog");
+        dialog.setRequired(false);
+        options.addOption(dialog);
 
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
@@ -43,6 +49,7 @@ public class App {
         inputFilePath = cmd.getOptionValue("input");
         printerName = cmd.getOptionValue("printer");
         hasOutput = cmd.hasOption("output");
+        hasDialog = cmd.hasOption("dialog");
 
         System.out.println(inputFilePath);
         System.out.println(printerName);
@@ -50,13 +57,25 @@ public class App {
         if (cmd.getOptionValue("engine") != null) {
             switch (cmd.getOptionValue("engine")) {
                 case "itext":
-                    IText7PDFUtil.printPDF(inputFilePath, printerName, hasOutput);
+                    if (hasDialog) {
+                        IText7PDFUtil.printPDFWithDialog(inputFilePath, printerName, hasOutput);
+                    } else {
+                        IText7PDFUtil.printPDF(inputFilePath, printerName, hasOutput);
+                    }
                     break;
                 case "spire":
-                    SpirePDFUtil.printPDF(inputFilePath, printerName, hasOutput);
+                    if (hasDialog) {
+                        SpirePDFUtil.printPDFWithDialog(inputFilePath, printerName, hasOutput);
+                    } else {
+                        SpirePDFUtil.printPDF(inputFilePath, printerName, hasOutput);
+                    }
                     break;
                 default:
-                    PDFBoxUtil.printPDF(inputFilePath, printerName, hasOutput);
+                    if (hasDialog) {
+                        PDFBoxUtil.printPDFWithDialog(inputFilePath, printerName, hasOutput);
+                    } else {
+                        PDFBoxUtil.printPDF(inputFilePath, printerName, hasOutput);
+                    }
                     break;
             }
         } else {
