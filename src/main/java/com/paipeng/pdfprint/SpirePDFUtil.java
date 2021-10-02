@@ -30,4 +30,28 @@ public class SpirePDFUtil {
             e.printStackTrace();
         }
     }
+
+    public static void printPDFWithDialog(String fileName, String printerName, boolean hasOutput) {
+        PdfDocument pdf = new PdfDocument();
+        pdf.loadFromFile(fileName);
+
+        PrinterJob loPrinterJob = PrinterJob.getPrinterJob();
+        PageFormat loPageFormat  = loPrinterJob.defaultPage();
+        Paper loPaper = loPageFormat.getPaper();
+
+        //remove the default printing margins
+        loPaper.setImageableArea(0,0,loPageFormat.getWidth(),loPageFormat.getHeight());
+
+        loPageFormat.setPaper(loPaper);
+        loPrinterJob.setPrintable(pdf,loPageFormat);
+
+        //display the print dialog
+        if (loPrinterJob.printDialog()) {
+            try {
+                loPrinterJob.print();
+            } catch (PrinterException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
