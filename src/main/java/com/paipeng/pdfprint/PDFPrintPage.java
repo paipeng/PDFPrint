@@ -13,9 +13,10 @@ import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class PDFPrintPage  implements Printable {
+public class PDFPrintPage implements Printable {
     private PDFFile file;
     private BufferedImage bufferedImage;
+
     PDFPrintPage(PDFFile file) {
         this.file = file;
         try {
@@ -36,7 +37,7 @@ public class PDFPrintPage  implements Printable {
     }
 
     @Override
-    public int print(Graphics g, PageFormat format, int index)
+    public int print(Graphics g, PageFormat pageFormat, int index)
             throws PrinterException {
         int pagenum = index + 1;
 
@@ -45,8 +46,8 @@ public class PDFPrintPage  implements Printable {
             // fit the PDFPage into the printing area
             Graphics2D g2 = (Graphics2D) g;
             PDFPage page = file.getPage(pagenum);
-            double pwidth = format.getImageableWidth();
-            double pheight = format.getImageableHeight();
+            double pwidth = pageFormat.getImageableWidth();
+            double pheight = pageFormat.getImageableHeight();
 
             double aspect = page.getAspectRatio();
             double paperaspect = pwidth / pheight;
@@ -57,15 +58,15 @@ public class PDFPrintPage  implements Printable {
                 // paper is too tall / pdfpage is too wide
                 int height = (int) (pwidth / aspect);
                 imgbounds = new Rectangle(
-                        (int) format.getImageableX(),
-                        (int) (format.getImageableY() + ((pheight - height) / 2)),
+                        (int) pageFormat.getImageableX(),
+                        (int) (pageFormat.getImageableY() + ((pheight - height) / 2)),
                         (int) pwidth, height);
             } else {
                 // paper is too wide / pdfpage is too tall
                 int width = (int) (pheight * aspect);
                 imgbounds = new Rectangle(
-                        (int) (format.getImageableX() + ((pwidth - width) / 2)),
-                        (int) format.getImageableY(), width, (int) pheight);
+                        (int) (pageFormat.getImageableX() + ((pwidth - width) / 2)),
+                        (int) pageFormat.getImageableY(), width, (int) pheight);
             }
 
             // render the page
@@ -82,10 +83,12 @@ public class PDFPrintPage  implements Printable {
             g2.drawString("This is a test!!!!", 20, 10);
 
             g2.drawLine(10, 10, 100, 100);
+
+            //g2.translate((int) pageFormat.getImageableX(), (int) pageFormat.getImageableY());
             if (bufferedImage != null) {
-                g2.drawImage(bufferedImage, 0, 0,
+                g2.drawImage(bufferedImage, 0, bufferedImage.getHeight(),
                         (int) bufferedImage.getWidth(),
-                        (int) bufferedImage.getHeight(), null);
+                        (int) -bufferedImage.getHeight(), null);
             }
             return PAGE_EXISTS;
         } else {
