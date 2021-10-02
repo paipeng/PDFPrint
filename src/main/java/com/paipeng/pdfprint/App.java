@@ -20,8 +20,12 @@ public class App {
 
         Option output = new Option("o", "output", false, "output to file");
         output.setRequired(false);
-
         options.addOption(output);
+
+
+        Option api = new Option("e", "engine", false, "pdf api: itext, pdfbox, spire");
+        api.setRequired(false);
+        options.addOption(api);
 
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
@@ -43,7 +47,22 @@ public class App {
         System.out.println(inputFilePath);
         System.out.println(printerName);
 
-        PDFBoxUtil.printPDF(inputFilePath, printerName, hasOutput);
+        if (cmd.getOptionValue("engine") != null) {
+            switch (cmd.getOptionValue("engine")) {
+                case "itext":
+                    IText7PDFUtil.printPDF(inputFilePath, printerName, hasOutput);
+                    break;
+                case "spire":
+                    SpirePDFUtil.printPDF(inputFilePath, printerName, hasOutput);
+                    break;
+                default:
+                    PDFBoxUtil.printPDF(inputFilePath, printerName, hasOutput);
+                    break;
+            }
+        } else {
+            PDFBoxUtil.printPDF(inputFilePath, printerName, hasOutput);
+        }
+
     }
 
 }
