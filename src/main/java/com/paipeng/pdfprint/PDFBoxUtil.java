@@ -87,10 +87,10 @@ public class PDFBoxUtil {
             /*
              * set the margins respectively the imageable area
              */
-            double leftMargin = 0.3;
-            double rightMargin = 0.3;
-            double topMargin = 0.5;
-            double bottomMargin = 0.5;
+            double leftMargin = 0.0;
+            double rightMargin = 0.0;
+            double topMargin = 0.0;
+            double bottomMargin = 0.0;
 
             a4paper.setImageableArea(leftMargin * 72.0, topMargin * 72.0,
                     (paperWidth - leftMargin - rightMargin) * 72.0,
